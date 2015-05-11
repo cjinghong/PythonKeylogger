@@ -21,11 +21,18 @@ def OnKeyboardEvent(event):
 			log = "[ESC]"
 		elif event.Ascii == 8:
 			log = "[Backspace]"
+			
+		''' Original ctrl-o to exit
 		elif event.Ascii == 15:
 			openfile.close()
 			sys.exit()
+		'''	
 		
-			
+		# Test custom exit
+		# ctrl+q to exit
+		elif event.Ascii == 17:
+			openfile.close()
+			sys.exit()
 		
 		elif event.Ascii == 13:
 			log = "\n"

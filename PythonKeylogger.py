@@ -24,6 +24,7 @@ def OnKeyboardEvent(event):
 		elif event.Ascii == 8:
 			log = "[Backspace]"
 			
+		# ctrl + w to save and exit.
 		elif event.Ascii == 17:
 			openfile.close()
 			sys.exit()
